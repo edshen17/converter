@@ -45,12 +45,24 @@ with open(sys.argv[1]) as csvfile:
         reconverted_floating.append(reconverted)
 
 
+    # if converted numbers are equal to original float values, output the final cvs file
+    if reconverted_floating == original:
+        fields = ["af", "av", "al"]
+        rows = []
+        for i, fixed_point in enumerate(converted_fixed):
+            if i % 3 == 0:
+                temp = []
+                temp.append(converted_fixed[i + 2])
+                temp.append(fixed_point)
+                temp.append(converted_fixed[i + 1])
+                rows.append(temp)
+                
+        # write the output file
+        filename = sys.argv[1] + "_FixedConverted"
+        with open(filename, 'w') as csvfile:  
+            csvwriter = csv.writer(csvfile)  
+            csvwriter.writerow(fields)  
+            csvwriter.writerows(rows) 
+        
 
-    # convert all the converted fixed numbers back to check the values
-    print(reconverted_floating == original)
-         
-
-
-# print(converted_fixed)
-print(reconverted_floating)
-print(original)
+print(converted_fixed)
